@@ -62,8 +62,8 @@ public class SocketTCPClient {
     public void abrirCanalesdeTexto() {
 
         System.out.println("(Cliente) Abriendo canales de texto...");
-        dos = new DataOutputStream(dos);
-        dis = new DataInputStream(dis);
+        dos = new DataOutputStream(os);
+        dis = new DataInputStream(is);
         System.out.println("(Cliente) Canalaes de textos abiertos.");
     }
 
@@ -93,8 +93,8 @@ public class SocketTCPClient {
     public void abrirObjeto() throws IOException {
 
         System.out.println("(Cliente) Abriendo objeto...");
-        objOu = new ObjectOutputStream(objOu);
-        objIn = new ObjectInputStream(objIn);
+        objOu = new ObjectOutputStream(os);
+        objIn = new ObjectInputStream(is);
         System.out.println("(Cliente) objeto abierto.");
     }
     
@@ -105,11 +105,12 @@ public class SocketTCPClient {
         System.out.println("(Cliente) Objeto enviado.");
     }
     
-    public void recibirObjeto() throws IOException {
+    public Object recibirObjeto() throws IOException {
 
         System.out.println("(Cliente) Recibiendo objeto...");
-        objIn.read();
+        Object object = objIn.read();
         System.out.println("(Cliente) Objeto recibido.");
+        return object;
     }
     
     public void cerrarObjeto() throws IOException {

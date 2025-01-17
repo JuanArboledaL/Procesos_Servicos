@@ -26,14 +26,15 @@ public class ClientePerro {
         cliente.enviarNumero(posicion);
         
         mensaje = cliente.recibirMensajedeTexto();
+        System.out.println(mensaje);
         
         if(mensaje.equals("ERROR")){
         
             System.out.println("Ha indicado una posición incorrecta de la lista");
         }else{
-            
-            cliente.recibirObjeto();
+            Perro perro = (Perro) cliente.recibirObjeto();
             System.out.println(cliente.recibirMensajedeTexto());
+            System.out.println(perro);
         }
         
         

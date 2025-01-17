@@ -59,8 +59,8 @@ public class SocketTCPServer {
     public void abrirCanalesdeTexto() {
 
         System.out.println("(Server) Abriendo canales de texto...");
-        dos = new DataOutputStream(dos);
-        dis = new DataInputStream(dis);
+        dos = new DataOutputStream(os);
+        dis = new DataInputStream(is);
         System.out.println("(Server) Canalaes de textos abiertos.");
     }
 
@@ -90,8 +90,8 @@ public class SocketTCPServer {
     public void abrirObjeto() throws IOException {
 
         System.out.println("(Server) Abriendo objeto...");
-        objOu = new ObjectOutputStream(objOu);
-        objIn = new ObjectInputStream(objIn);
+        objIn = new ObjectInputStream(is);
+        objOu = new ObjectOutputStream(os);
         System.out.println("(Server) objeto abierto.");
     }
 

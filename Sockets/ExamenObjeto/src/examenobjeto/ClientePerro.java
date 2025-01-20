@@ -1,4 +1,4 @@
-package sockettcp;
+package examenobjeto;
 
 import java.io.IOException;
 

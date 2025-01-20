@@ -47,6 +47,7 @@ public class ServidorPerro {
         if(posicion > listaPerros.length){
         
             servidor.enviarMensajedeTexto("ERROR");
+            
         }else{
             
             servidor.enviarMensajedeTexto("CORRECTO");
@@ -59,43 +60,6 @@ public class ServidorPerro {
         servidor.cerrarCanalesdeTexto();
         servidor.cerrarObjeto();
         servidor.stop();
-        
-
-//        try {
-//            SocketTCPServer servidor = new SocketTCPServer(50001);
-//            servidor.start();
-//            
-//            servidor.dos.writeUTF("Dame Gato");
-//            mensaje = servidor.dis.readUTF();
-//
-//            while (!mensaje.equals(pedir)) {
-//                mensaje = servidor.dis.readUTF();
-//            }
-//
-//            if(mensaje.equals(pedir)){
-//            
-//                servidor.os.write(listaPerros.length);
-//                servidor.dos.writeUTF("OK. POSICION");
-//            }
-//            
-//            posicion = servidor.is.read();
-//            
-//            if(posicion > listaPerros.length){
-//            
-//                servidor.dos.writeUTF("ERROR");
-//                
-//            }else{
-//            
-//                Perro perro = listaPerros[posicion];
-//                servidor.dos.writeUTF("ENVIO PERRO");
-//                
-//            }
-//            
-//            
-//            servidor.stop();
-//        } catch (IOException ioe) {
-//            ioe.printStackTrace();
-//        }
-
+ 
     }
 }

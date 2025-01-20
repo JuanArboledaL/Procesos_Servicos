@@ -105,10 +105,10 @@ public class SocketTCPClient {
         System.out.println("(Cliente) Objeto enviado.");
     }
     
-    public Object recibirObjeto() throws IOException {
+    public Object recibirObjeto() throws IOException, ClassNotFoundException {
 
         System.out.println("(Cliente) Recibiendo objeto...");
-        Object object = objIn.read();
+        Object object = objIn.readObject();
         System.out.println("(Cliente) Objeto recibido.");
         return object;
     }

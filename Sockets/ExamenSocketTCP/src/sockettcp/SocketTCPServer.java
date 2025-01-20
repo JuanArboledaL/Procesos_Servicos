@@ -102,10 +102,10 @@ public class SocketTCPServer {
         System.out.println("(Server) Objeto enviado.");
     }
 
-    public void recibirObjeto() throws IOException {
+    public void recibirObjeto() throws IOException, ClassNotFoundException {
 
         System.out.println("(Server) Recibiendo objeto...");
-        objIn.read();
+        objIn.readObject();
         System.out.println("(Server) Objeto recibido.");
     }
 

@@ -67,14 +67,14 @@ public class SocketTCPServer {
     public void enviarMensajedeTexto(String mensaje) throws IOException {
 
         System.out.println("(Server) enviando mensaje de texto...");
-        dos.writeUTF(mensaje);
+        objOu.writeUTF(mensaje);
         System.out.println("(Server) mensaje de texto enviado");
     }
 
     public String recibirMensajedeTexto() throws IOException {
 
         System.out.println("(Server) recibiendo mensaje de texto");
-        String mensaje = dis.readUTF();
+        String mensaje = (String)objIn.readUTF();
         System.out.println("(Server) mensaje de texto recibido");
         return mensaje;
     }

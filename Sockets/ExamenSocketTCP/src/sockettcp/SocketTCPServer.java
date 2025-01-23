@@ -116,6 +116,7 @@ public class SocketTCPServer {
         objIn.close();
         System.out.println("(Server) Objeto cerrado.");
     }
+
 //    public SocketTCPServer(int puerto) throws IOException {
 //        serverSocket = new ServerSocket(puerto);
 //    }

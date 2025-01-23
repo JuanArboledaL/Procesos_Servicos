@@ -1,4 +1,4 @@
- package udpsocketserver;
+package udpsocketserver;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -38,4 +38,6 @@ public class SocketUDPServer {
             e.printStackTrace();
         }
     }
+
+    
 }

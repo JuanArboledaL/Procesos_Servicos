@@ -44,7 +44,7 @@ public class ExamenT4 {
         cadenaApi+= "id: " + gestor.obtenerDescription(llamadaApi)+ "\n";
         cadenaApi+= "id: " + gestor.obtenerCategory(llamadaApi)+ "\n";
         cadenaApi+= "id: " + gestor.obtenerId(llamadaApi)+ "\n";
-        //DescargarImagen(gestor.obtenerImage(llamadaApi));
+        DescargarImagen(gestor.obtenerImage(llamadaApi));
         
         
         System.out.println("Informacion de la Api: \n" + cadenaApi);

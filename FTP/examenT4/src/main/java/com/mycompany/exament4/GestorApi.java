@@ -123,19 +123,17 @@ public class GestorApi {
         
     }
     
-    public String obtenerImagen(String llamarApi){
+    public String obtenerImage(String llamarApi){
     
         if(llamarApi != null){
         
             Gson gson = new Gson();
             api a = gson.fromJson(llamarApi, api.class);
             return a.getImage();
-            
         }else{
         
-            return null;
+            return "null";
         }
-        
     }
     
     

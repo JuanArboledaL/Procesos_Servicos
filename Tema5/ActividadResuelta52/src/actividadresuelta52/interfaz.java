@@ -6,6 +6,8 @@ package actividadresuelta52;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,7 +22,8 @@ public class interfaz extends javax.swing.JFrame {
         initComponents();
     }
     private static final String ENCODING_TYPE = "UTF-8";
-    String credencial="", contra ="";
+    String credencial = "", contra = "";
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,27 +75,17 @@ public class interfaz extends javax.swing.JFrame {
         registro.setBackground(new java.awt.Color(102, 255, 102));
         registro.setText("Registrarse");
         registro.setEnabled(false);
-        registro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registroActionPerformed(evt);
+        registro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registroMouseClicked(evt);
             }
         });
 
         contrasenia.setEnabled(false);
-        contrasenia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                contraseniaActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Contraseña:");
 
         usuario.setEnabled(false);
-        usuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usuarioActionPerformed(evt);
-            }
-        });
 
         jLabel2.setText("Usuario:");
 
@@ -188,16 +181,16 @@ public class interfaz extends javax.swing.JFrame {
         );
 
         jButton1.setText("Registrarse");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
             }
         });
 
         jButton2.setText("Inicio de Sesión");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
             }
         });
 
@@ -260,83 +253,102 @@ public class interfaz extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usuarioActionPerformed
-    
-    private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
-        // TODO add your handling code here:
-        RegistradorCredenciales registro = new RegistradorCredenciales();
-
-        try{
-            byte[] resumen = HASHManager.getDigest(contra.getBytes(ENCODING_TYPE));
-            Files.write(new File(credencial + ".credencial").toPath(), resumen);
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        creado.setText("El usuario " + usuario.getText()+" ha sido registrado con éxito");
-        
-    }//GEN-LAST:event_registroActionPerformed
-
     private void robotCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_robotCheckActionPerformed
         // TODO add your handling code here:
-        int cont=0;
-        if(usuario.getText().equals("")){
-        
+        int cont = 0;
+        if (usuario.getText().equals("")) {
+
             sinUsuario.setText("Error: Se debe de ingresar un usuario");
-        }else{
-        
+        } else {
+
             credencial = usuario.getText();
             cont++;
         }
-        
-        if(contrasenia.getText().equals("")){
-        
+
+        if (contrasenia.getText().equals("")) {
+
             sinContra.setText("Error: se debe de ingresar una contraseña");
-        
-        }else{
-        
+
+        } else {
+
             contra = contrasenia.getText();
             cont++;
         }
-        
-        if(!confirmarContra.getText().equals(contrasenia.getText())){
-        
+
+        if (!confirmarContra.getText().equals(contrasenia.getText())) {
+
             confirmarCon.setText("Error: no es la misma contraseña");
-        }else{
-        
+        } else {
+
             cont++;
         }
-        
-        if(cont == 3){
-        
+
+        if (cont == 3) {
+
             sinUsuario.setText("");
             sinContra.setText("");
             confirmarCon.setText("");
             registro.setEnabled(true);
         }
-       
+
     }//GEN-LAST:event_robotCheckActionPerformed
 
-    private void contraseniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contraseniaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_contraseniaActionPerformed
+    private void registroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registroMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        usuario.setEnabled(true);
-        contrasenia.setEnabled(true);
-        confirmarContra.setEnabled(true);
-        robotCheck.setEnabled(true);
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+        try {
+            byte[] resumen = HASHManager.getDigest(contra.getBytes(ENCODING_TYPE));
+            Files.write(new File(credencial + ".credencial").toPath(), resumen);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        creado.setText("El usuario " + usuario.getText() + " ha sido registrado con éxito");
+
+        clearAll();
+
+        enabledAll(false);
+        registro.setEnabled(true);
+
+    }//GEN-LAST:event_registroMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
+        enabledAll(true);
+        creado.setText("");
+        registro.setEnabled(false);
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        creado.setText("");
+        registro.setVisible(false);
         
+        enabledInicioSesion(true);
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void clearAll() {
+
+        usuario.setText("");
+        contrasenia.setText("");
+        confirmarContra.setText("");
+        robotCheck.setSelected(false);
+    }
+    
+    private void enabledInicioSesion(boolean valor){
+    
+        usuario.setEnabled(valor);
+        contrasenia.setEnabled(valor);
+    }
+
+    private void enabledAll(boolean valor) {
+
+        usuario.setEnabled(valor);
+        contrasenia.setEnabled(valor);
+        confirmarContra.setEnabled(valor);
+        robotCheck.setEnabled(valor);
+
+    }
 
     /**
      * @param args the command line arguments

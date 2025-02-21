@@ -11,7 +11,7 @@ public class DescifradorAESSimple {
     public static void main(String[] args) {
     
         final int LONGITUD_BLOQUE = 16; // Expresado en bytes
-        final String NOMBRE_FICHERO = "mensaje_cifrado.txt";
+        final String NOMBRE_FICHERO = "mensajito.txt";
         final String PASSWORD = "MeLlamoSpiderman";
 
         try {

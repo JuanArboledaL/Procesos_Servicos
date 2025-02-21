@@ -10,7 +10,7 @@ public class CifradorAESSimple {
     public static void main(String[] args) {
         
         final int LONGITUD_BLOQUE = 16; // Expresado en bytes
-        final String NOMBRE_FICHERO = "mensaje_cifrado.txt";
+        final String NOMBRE_FICHERO = "mensajito.txt";
         final String PASSWORD = "MeLlamoSpiderman";
         final String TEXTO_EN_CLARO = "La clave secreta de la caja fuerte es 12345678";
         

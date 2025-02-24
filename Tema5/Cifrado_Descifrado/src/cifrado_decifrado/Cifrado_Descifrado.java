@@ -17,7 +17,6 @@ public class Cifrado_Descifrado {
 
     public static Key obtenerClave(String password, int longitud){
         
-        // La longitud puede ser de 16, 24 o 32 bytes.
         Key clave = new SecretKeySpec(password.getBytes(), 0, longitud, "AES");
         return clave;
     }

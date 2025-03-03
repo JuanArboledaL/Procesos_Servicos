@@ -50,6 +50,7 @@ public class interfaz extends javax.swing.JFrame {
         descifrar = new javax.swing.JButton();
         accion = new javax.swing.JButton();
         resultado = new java.awt.Label();
+        fin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(0, 153, 153));
@@ -93,6 +94,15 @@ public class interfaz extends javax.swing.JFrame {
             }
         });
 
+        resultado.setAlignment(java.awt.Label.CENTER);
+
+        fin.setText("Fin");
+        fin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                finActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -114,9 +124,7 @@ public class interfaz extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createSequentialGroup()
                                     .addComponent(txtContra)
                                     .addGap(18, 18, 18)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(resultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(contrasenya, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE))))))
+                                    .addComponent(contrasenya, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(257, 257, 257)
                         .addComponent(jLabel4))
@@ -130,8 +138,14 @@ public class interfaz extends javax.swing.JFrame {
                         .addComponent(buscarArchivo))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(272, 272, 272)
-                        .addComponent(accion)))
-                .addContainerGap(63, Short.MAX_VALUE))
+                        .addComponent(accion))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(286, 286, 286)
+                        .addComponent(fin))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(107, 107, 107)
+                        .addComponent(resultado, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,9 +175,11 @@ public class interfaz extends javax.swing.JFrame {
                     .addComponent(txtContra))
                 .addGap(47, 47, 47)
                 .addComponent(accion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addGap(24, 24, 24)
                 .addComponent(resultado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(100, 100, 100))
+                .addGap(23, 23, 23)
+                .addComponent(fin)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,34 +197,18 @@ public class interfaz extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     boolean cif = false, desci = false;
-    String mensaje;
+    String mensaje, direccion;
     Cifrado_Descifrado cd = new Cifrado_Descifrado();
-    
+    File f;
+
     private void buscarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarArchivoActionPerformed
         // TODO add your handling code here:
 
         JFileChooser jf = new JFileChooser();
         jf.setCurrentDirectory(new File(System.getProperty("user.dir")));
         jf.showSaveDialog(null);
-        FileReader fr;
-        try {
-            System.out.println(jf.getSelectedFile().getAbsolutePath());
-            fr = new FileReader (jf.getSelectedFile().getAbsolutePath());
-            BufferedReader br = new BufferedReader(fr);
-            String linea = br.readLine();
-        while (linea != null) {
-                // Procesa la línea aquí
-                mensaje += linea +"\n";
-                System.out.println(mensaje);
-            }
-            
-            System.out.println(mensaje);
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(interfaz.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(interfaz.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        direccion = jf.getSelectedFile().getAbsolutePath();
+        f = new File(direccion);
         enabledAll(true);
 
     }//GEN-LAST:event_buscarArchivoActionPerformed
@@ -220,6 +220,8 @@ public class interfaz extends javax.swing.JFrame {
         enabledAll(true);
         visibleCifrado(false);
         cif = true;
+        fin.setVisible(false);
+        accion.setVisible(true);
 
     }//GEN-LAST:event_cifrarActionPerformed
 
@@ -229,34 +231,95 @@ public class interfaz extends javax.swing.JFrame {
         enabledAll(true);
         visibleDescifrado(false);
         desci = true;
+        fin.setVisible(false);
+        accion.setVisible(true);
 
     }//GEN-LAST:event_descifrarActionPerformed
 
     private void accionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accionActionPerformed
         // TODO add your handling code here:
 
+        FileReader fr;
+        String cv = "";
+        try {
+            BufferedReader b = new BufferedReader(new FileReader(direccion));
+            String linea;
+
+            while ((linea = b.readLine()) != null) {
+                mensaje += linea + "\n";
+            }
+
+            b.close();
+
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+
         if (cif == true) {
 
             final int LONGITUD_BLOQUE = 16;
             final String NOMBRE_FICHERO = "mensajeCifrado.txt";
-            
+
             try {
-            Key clave = cd.obtenerClave(contrasenya.getText(), LONGITUD_BLOQUE);
-            String textoCifrado = cd.cifrar( mensaje, clave);
-            PrintWriter pw = new PrintWriter(NOMBRE_FICHERO);
-            pw.write(textoCifrado);
-            pw.close();
-            resultado.setText("El mensaje se ha cifrado correctamente");
+
+                Key clave = cd.obtenerClave(contrasenya.getText(), LONGITUD_BLOQUE);
+                String textoCifrado = cd.cifrar(mensaje, clave);
+                PrintWriter pw = new PrintWriter(NOMBRE_FICHERO);
+                pw.write(textoCifrado);
+                pw.close();
+                resultado.setText("El mensaje se ha cifrado correctamente");
 
             } catch (Exception e) {
-            e.printStackTrace();
-        }
-            
+                e.printStackTrace();
+
+            }
+
+            fin.setVisible(true);
+            cif = false;
 
         } else if (desci == true) {
 
+            final int LONGITUD_BLOQUE = 16;
+            final String NOMBRE_FICHERO = "mensajeCifrado.txt";
+
+            try {
+                File file = new File(NOMBRE_FICHERO);
+
+                Key clave = cd.obtenerClave(contrasenya.getText(), LONGITUD_BLOQUE);
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                String textoCifrado = br.readLine();
+                String mensajeDescifrado = cd.descifrar(textoCifrado, clave);
+                br.close();
+                resultado.setText("El mensaje se ha descifrado correctamente, este es el mensaje: " + mensajeDescifrado);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            desci = false;
+            fin.setVisible(true);
         }
+        f.delete();
     }//GEN-LAST:event_accionActionPerformed
+
+    private void finActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finActionPerformed
+        // TODO add your handling code here:
+        inicio(false);
+
+    }//GEN-LAST:event_finActionPerformed
+
+    private void inicio(boolean en) {
+
+        buscarArchivo.setEnabled(en);
+        contrasenya.setEditable(en);
+        txtContra.setEnabled(en);
+        jLabel1.setEnabled(en);
+        resultado.setText("");
+        contrasenya.setText("");
+        accion.setVisible(en);
+        descifrar.setVisible(true);
+        cifrar.setVisible(true);
+        ingreseContra.setText("");
+    }
 
     private static void enabledAll(boolean en) {
 
@@ -311,6 +374,7 @@ public class interfaz extends javax.swing.JFrame {
             public void run() {
                 new interfaz().setVisible(true);
                 enabledAll(false);
+                fin.setVisible(false);
             }
         });
     }
@@ -321,6 +385,7 @@ public class interfaz extends javax.swing.JFrame {
     private javax.swing.JButton cifrar;
     private static javax.swing.JTextField contrasenya;
     private javax.swing.JButton descifrar;
+    private static javax.swing.JButton fin;
     private java.awt.Label ingreseContra;
     private static javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

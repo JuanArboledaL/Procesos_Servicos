@@ -271,6 +271,7 @@ public class interfaz extends javax.swing.JFrame {
         direccion2 = jf.getSelectedFile().getAbsolutePath();
 
         try {
+            
             BufferedReader b = new BufferedReader(new FileReader(direccion));
             StringBuilder mensaje = new StringBuilder();
             String linea;
